@@ -4,25 +4,35 @@
   <button>Submit</button>
 </form>
 
-<% messages.each do |message| %>
 
-  <li>
-    <a href="/messages/<%= message["id"] %>"><%= message["message"] %></a>
-    <form action="/messages/<%= message["id"] %>/edit" method="get">
-      <button>Edit</button>
-    </form>
-    <form action="/messages/<%= message["id"] %>" method="post">
-      <input type="hidden" name="_method" value="delete">
-      <button>Delete</button>
-    </form>
-    <form action="/comments/<%= message["id"] %>/new" method="get">
-      <button>Comment</button>
-    </form>
-    <p>Comments:</p>
-    <% comments.each do |hash| %>
-      <p><%= hash["comment"] if hash["message_id"] == message["id"] %></p>
-    <% end %>
-  </li>
+  <% messages.each do |message| %>
 
-<% end %>
+    <table align="center">
+      <tr>
+        <td><a href="/messages/<%= message["id"] %>"><%= message["message"] %></a></td>
+        <td>
+          <form action="/messages/<%= message["id"] %>/edit" method="get">
+            <button>Edit</button>
+          </form>
+        </td>
+        <td>
+          <form action="/messages/<%= message["id"] %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button>Delete</button>
+          </form>
+        </td>
+        <td>
+          <form action="/comments/<%= message["id"] %>/new" method="get">
+            <button>Comment</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+      <% comments.each do |hash| %>
+        <% if hash["message_id"] == message["id"] %>
+          <p><%= hash["comment"] %><p>
+        <% end %>
+      <% end %>
+
+  <% end %>
 
