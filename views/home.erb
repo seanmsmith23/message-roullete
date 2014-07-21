@@ -11,6 +11,10 @@
     <form action="/messages/<%= message["id"] %>/edit" method="get">
       <button>Edit</button>
     </form>
+    <form action="/messages/<%= message["id"] %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button>Delete</button>
+    </form>
   </li>
 
 <% end %>

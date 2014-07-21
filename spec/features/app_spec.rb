@@ -55,3 +55,17 @@ feature "Editing Messages" do
     expect(page).to have_content("Edit Message")
   end
 end
+
+feature "Deleting Messages" do
+  scenario "User can click delete button and delete message" do
+    visit "/"
+    fill_in "Message", :with => "Hello Everyone!"
+    click_button "Submit"
+
+    expect(page).to have_content("Hello Everyone!")
+
+    click_button("Delete")
+
+    expect(page).to_not have_content("Hello Everyone!")
+  end
+end
