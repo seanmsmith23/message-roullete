@@ -15,6 +15,13 @@
       <input type="hidden" name="_method" value="delete">
       <button>Delete</button>
     </form>
+    <form action="/comments/<%= message["id"] %>/new" method="get">
+      <button>Comment</button>
+    </form>
+    <p>Comments:</p>
+    <% comments.each do |hash| %>
+      <p><%= hash["comment"] if hash["message_id"] == message["id"] %></p>
+    <% end %>
   </li>
 
 <% end %>
