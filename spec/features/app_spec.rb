@@ -24,17 +24,13 @@ feature "Messages" do
     expect(page).to have_content("Message must be less than 140 characters.")
   end
 
+end
+
+feature "Editing Messages" do
   scenario "As a user I can edit a message and see autofilled message on edit page" do
     visit "/"
-
-    expect(page).to have_content("Message Roullete")
-
     fill_in "Message", :with => "Hello Everyone!"
-
     click_button "Submit"
-
-    expect(page).to have_content("Hello Everyone!")
-
     click_button "Edit"
 
     expect(page).to have_content("Edit Message")
@@ -44,5 +40,18 @@ feature "Messages" do
     click_button "Submit"
 
     expect(page).to have_content("Hello Nobody!")
+  end
+
+  scenario "User should see error message if edit is more than 140 chars" do
+    visit "/"
+    fill_in "Message", :with => "Hello Everyone!"
+    click_button "Submit"
+    click_button "Edit"
+
+    fill_in "edit_message", :with => "a" * 141
+    click_button "Submit"
+
+    expect(page).to have_content("Message must be less than 140 characters.")
+    expect(page).to have_content("Edit Message")
   end
 end
