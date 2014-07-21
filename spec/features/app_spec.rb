@@ -85,3 +85,20 @@ feature "Comments" do
     expect(page).to have_content("Good idea!")
   end
 end
+
+feature "View Message" do
+  scenario "User can click a message and be taken to a page to view only message and its comments" do
+    visit "/"
+    fill_in "Message", :with => "Hello Everyone!"
+    click_button "Submit"
+    click_button "Comment"
+    fill_in "comment", with: "Good idea!"
+    click_button "Add Comment"
+
+    click_link "Hello Everyone!"
+
+    expect(page).to have_content("Message Content")
+    expect(page).to have_content("Hello Everyone!")
+    expect(page).to have_content("Good idea!")
+  end
+end

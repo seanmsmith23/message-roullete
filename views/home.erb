@@ -7,7 +7,7 @@
 <% messages.each do |message| %>
 
   <li>
-    <%= message["message"] %>
+    <a href="/messages/<%= message["id"] %>"><%= message["message"] %></a>
     <form action="/messages/<%= message["id"] %>/edit" method="get">
       <button>Edit</button>
     </form>

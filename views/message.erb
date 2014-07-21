@@ -1,0 +1,9 @@
+<h3>Message Contents</h3>
+
+<p>Message:</p>
+<%= message["message"] %>
+
+<p>Comments:</p>
+<% comments.each do |hash| %>
+  <p><%= hash["comment"] %></p>
+<% end %>
