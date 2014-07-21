@@ -26,6 +26,17 @@
             <button>Comment</button>
           </form>
         </td>
+        <td>
+          <% if favorites.include?(message["id"]) %>
+            <form action="/favorite/<%= message["id"] %>" method="post">
+              <button>Unfavorite</button>
+            </form>
+          <% else %>
+            <form action="/favorite/<%= message["id"] %>" method="post">
+              <button>Favorite</button>
+            </form>
+          <% end %>
+        </td>
       </tr>
     </table>
       <% comments.each do |hash| %>

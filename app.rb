@@ -15,8 +15,11 @@ class App < Sinatra::Application
   get "/" do
     messages = @database_connection.sql("SELECT * FROM messages")
     comments = @database_connection.sql("SELECT * FROM comments")
+    messages_favorited =[]
+    favorites = @database_connection.sql("SELECT * FROM favorites")
+    favorites.each { |hash| messages_favorited << hash["message_id"] }
 
-    erb :home, locals: {messages: messages, comments: comments}
+    erb :home, locals: {messages: messages, comments: comments, favorites: messages_favorited}
   end
 
   get "/messages/:id" do
@@ -34,6 +37,21 @@ class App < Sinatra::Application
     else
       flash[:error] = "Message must be less than 140 characters."
     end
+    redirect "/"
+  end
+
+  post "/favorite/:id" do
+    id = params[:id]
+
+    messages_favorited =[]
+    favorites = @database_connection.sql("SELECT * FROM favorites")
+    favorites.each { |hash| messages_favorited << hash["message_id"] }
+    if messages_favorited.include?(id)
+      @database_connection.sql("DELETE FROM favorites WHERE message_id = #{id}")
+    else
+      @database_connection.sql("INSERT INTO favorites (message_id) VALUES (#{id})")
+    end
+
     redirect "/"
   end
 
